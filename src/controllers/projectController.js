@@ -33,11 +33,13 @@ export const getProject = (req, res) => {
     Project.findById(req.params.id)
     .populate('task')
     .populate('resource')
-    .exec((err, projects) => {
+    .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
+        } else if(project == null) {
+            res.sendStatus(404)
         } else {
-            res.status(200).json(projects)
+            res.status(200).json(project)
         }
     });
 };

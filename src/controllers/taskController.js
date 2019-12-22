@@ -1,4 +1,4 @@
-let mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 import { TaskSchema } from "../models/taskModel";
 
@@ -34,11 +34,13 @@ export const getTask = (req, res) => {
     Task.findById(req.params.id)
     .populate('linkedTasks')
     .populate('resources')
-    .exec((err, tasks) => {
+    .exec((err, task) => {
         if(err) {
             res.status(400).send(err);
+        } else if(task == null) {
+            res.sendStatus(404)
         } else {
-            res.status(200).json(tasks)
+            res.status(200).json(task)
         }
     });
 };
