@@ -43,7 +43,10 @@ export const getProject = (req, res) => {
 };
 
 export const updateProject = (req, res) => {
-    Project.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false}, (err, project) => {
+    Project.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
+    .populate('task')
+    .populate('resource')
+    .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
         } else {
@@ -54,7 +57,7 @@ export const updateProject = (req, res) => {
                 res.status(200).json(project);
             }
         }
-    })
+    });
 };
 
 export const deleteProject = (req, res) => {
