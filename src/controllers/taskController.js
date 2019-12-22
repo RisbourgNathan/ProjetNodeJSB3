@@ -18,38 +18,47 @@ export const createTask = (req, res) => {
 };
 
 export const listTasks = (req, res) => {
-    Task.find({}, (err, tasks) => {
+    Task.find({})
+    .populate('linkedTasks')
+    .populate('resources')
+    .exec((err, tasks) => {
         if(err) {
             res.status(400).send(err);
         } else {
             res.status(200).json(tasks)
         }
-    })
+    });
 };
 
 export const getTask = (req, res) => {
-    Task.findById(req.params.id, (err, task) => {
+    Task.findById(req.params.id)
+    .populate('linkedTasks')
+    .populate('resources')
+    .exec((err, tasks) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            res.status(200).json(task);
+            res.status(200).json(tasks)
         }
-    })
+    });
 };
 
 export const updateTask = (req, res) => {
-    Task.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false}, (err, task) => {
+    Task.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
+    .populate('linkedTasks')
+    .populate('resources')
+    .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            if(task == null) {
+            if(project == null) {
                 res.sendStatus(404);
             }
             else {
-                res.status(200).json(task);
+                res.status(200).json(project);
             }
         }
-    })
+    });
 };
 
 export const deleteTask = (req, res) => {
