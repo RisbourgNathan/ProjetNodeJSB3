@@ -7,7 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 export const ProjectSchema = new Schema({
     name: {
         type: String,
-        required: 'Name required'
+        required: 'Name required',
     },
     desc: {
         type: String,
@@ -33,7 +33,8 @@ export const ProjectSchema = new Schema({
         }
     },
     task:[{
-        task: ObjectId
+        type: ObjectId,
+        ref: 'Task'
     }],
     groupTask: [{
         name: String,
@@ -47,7 +48,8 @@ export const ProjectSchema = new Schema({
         }
     }],
     resources:[{
-        resource: ObjectId
+        type: ObjectId,
+        ref: 'Resource'
     }],
     milestones:[{
         name: String,

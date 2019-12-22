@@ -36,13 +36,11 @@ export const TaskSchema = new Schema({
         required: 'Color required'
     },
     linkedTasks: [{
-        task: {
-            type: ObjectId
-        }
+        type: ObjectId,
+        ref: 'Task'
     }],
     resources: [{
-        resource: {
-            type: ObjectId
-        }
+        type: ObjectId,
+        ref: 'Resource'
     }]
 });
