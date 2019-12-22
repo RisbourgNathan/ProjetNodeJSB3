@@ -1,0 +1,17 @@
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
+export const ServiceSchema = new Schema({
+    nameService: {
+        type: String,
+        required: 'Service name requiered'
+    },
+    projects:[{
+        project: {
+            type: ObjectId
+        }
+    }]
+});
