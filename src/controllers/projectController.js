@@ -21,11 +21,6 @@ export const createProject = (req, res) => {
 
 export const listProjects = (req, res) => {
     Project.find({})
-    .populate({
-        path: 'task',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
-    })
-    .populate('resources')
     .exec((err, projects) => {
         if(err) {
             res.status(400).send(err);
@@ -37,11 +32,6 @@ export const listProjects = (req, res) => {
 
 export const getProject = (req, res) => {
     Project.findById(req.params.id)
-    .populate({
-        path: 'task',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
-    })
-    .populate('resource')
     .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
@@ -55,11 +45,6 @@ export const getProject = (req, res) => {
 
 export const updateProject = (req, res) => {
     Project.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
-    .populate({
-        path: 'task',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
-    })
-    .populate('resource')
     .exec((err, project) => {
         if(err) {
             res.status(400).send(err);

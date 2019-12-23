@@ -1,7 +1,16 @@
 import express from 'express';
 let app = require('express')();
 let http = require('http').createServer(app);
-let io = require('socket.io')(http);
+export let io = require('socket.io')(http, {
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }});
 
 import mongoose from 'mongoose';
 
@@ -39,10 +48,6 @@ resourceRoutes(app);
 projectRoutes(app);
 serviceRoutes(app);
 
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/public/index.html');
-// });
-
 io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} connected`);
 
@@ -52,7 +57,7 @@ io.on('connection', (socket) => {
 
     socket.on('message', (data) => {
         console.log(data);
-    })
+    });
 });
 
 http.listen(PORT, 

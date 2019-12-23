@@ -11,20 +11,13 @@ export const createService = (req, res) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            const opts = [{path: 'projects'}];
-
-            let promise = Service.populate(service, opts);
-            promise.then((data) => {res.status(201).json(data)});
+            res.status(201).json(service);
         }
     })
 };
 
 export const listServices = (req, res) => {
     Service.find({})
-    // .populate({
-    //     path: 'projects',
-    //     populate: {path: 'task', populate:{path: 'linkedTasks'}}
-    // })
     .exec((err, services) => {
         if(err) {
             res.status(400).send(err);
@@ -36,10 +29,6 @@ export const listServices = (req, res) => {
 
 export const getService = (req, res) => {
     Service.findById(req.params.id)
-    .populate({
-        path: 'projects',
-        populate: {path: 'task', populate:{path: 'linkedTasks'}}
-    })
     .exec((err, service) => {
         if(err) {
             res.status(400).send(err);
@@ -53,10 +42,6 @@ export const getService = (req, res) => {
 
 export const updateService = (req, res) => {
     Service.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
-    .populate({
-        path: 'projects',
-        populate: {path: 'task', populate:{path: 'linkedTasks'}}
-    })
     .exec((err, service) => {
         if(err) {
             res.status(400).send(err);

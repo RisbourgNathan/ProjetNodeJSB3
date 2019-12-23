@@ -25,10 +25,6 @@ export const createTask = (req, res) => {
 
 export const listTasks = (req, res) => {
     Task.find({})
-    .populate({
-        path: 'linkedTasks',
-        populate: [{path: 'linkedTasks', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}]
-    })
     .populate('resources')
     .exec((err, tasks) => {
         if(err) {
@@ -41,11 +37,6 @@ export const listTasks = (req, res) => {
 
 export const getTask = (req, res) => {
     Task.findById(req.params.id)
-    .populate({
-        path: 'linkedTasks',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
-    })
-    .populate('resources')
     .exec((err, task) => {
         if(err) {
             res.status(400).send(err);
@@ -59,11 +50,6 @@ export const getTask = (req, res) => {
 
 export const updateTask = (req, res) => {
     Task.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
-    .populate({
-        path: 'linkedTasks',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
-    })
-    .populate('resources')
     .exec((err, task) => {
         if(err) {
             res.status(400).send(err);
