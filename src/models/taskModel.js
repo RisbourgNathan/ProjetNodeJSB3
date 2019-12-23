@@ -37,10 +37,13 @@ export const TaskSchema = new Schema({
     },
     linkedTasks: [{
         type: ObjectId,
-        ref: 'Task'
+        ref: 'Task',
+        autopopulate: true
     }],
     resources: [{
         type: ObjectId,
-        ref: 'Resource'
+        ref: 'Resource',
+        autopopulate: true
     }]
 });
+TaskSchema.plugin(require('mongoose-autopopulate'));

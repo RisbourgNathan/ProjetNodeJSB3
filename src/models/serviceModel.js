@@ -11,6 +11,8 @@ export const ServiceSchema = new Schema({
     },
     projects:[{
         type: ObjectId,
-        ref: 'Project'
+        ref: 'Project',
+        autopopulate: true
     }]
 });
+ServiceSchema.plugin(require('mongoose-autopopulate'));

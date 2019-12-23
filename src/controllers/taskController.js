@@ -13,6 +13,10 @@ export const createTask = (req, res) => {
         } else {
             const opts = [{path: 'linkedTasks', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}];
 
+            task.linkedTasks.forEach(element => {
+                
+            });
+
             let promise = Task.populate(task, opts);
             promise.then((data) => {res.status(201).json(data)});
         }
@@ -23,7 +27,7 @@ export const listTasks = (req, res) => {
     Task.find({})
     .populate({
         path: 'linkedTasks',
-        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
+        populate: [{path: 'linkedTasks', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}]
     })
     .populate('resources')
     .exec((err, tasks) => {

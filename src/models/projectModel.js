@@ -34,7 +34,8 @@ export const ProjectSchema = new Schema({
     },
     task:[{
         type: ObjectId,
-        ref: 'Task'
+        ref: 'Task',
+        autopopulate: true
     }],
     groupTask: [{
         name: String,
@@ -49,7 +50,8 @@ export const ProjectSchema = new Schema({
     }],
     resources:[{
         type: ObjectId,
-        ref: 'Resource'
+        ref: 'Resource',
+        autopopulate: true
     }],
     milestones:[{
         name: String,
@@ -59,3 +61,4 @@ export const ProjectSchema = new Schema({
         }
     }]
 });
+ProjectSchema.plugin(require('mongoose-autopopulate'));

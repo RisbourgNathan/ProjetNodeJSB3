@@ -21,10 +21,10 @@ export const createService = (req, res) => {
 
 export const listServices = (req, res) => {
     Service.find({})
-    .populate({
-        path: 'projects',
-        populate: {path: 'task', populate:{path: 'linkedTasks'}}
-    })
+    // .populate({
+    //     path: 'projects',
+    //     populate: {path: 'task', populate:{path: 'linkedTasks'}}
+    // })
     .exec((err, services) => {
         if(err) {
             res.status(400).send(err);
