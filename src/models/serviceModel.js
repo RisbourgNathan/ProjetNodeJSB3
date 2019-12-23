@@ -10,8 +10,7 @@ export const ServiceSchema = new Schema({
         required: 'Service name requiered'
     },
     projects:[{
-        project: {
-            type: ObjectId
-        }
+        type: ObjectId,
+        ref: 'Project'
     }]
 });

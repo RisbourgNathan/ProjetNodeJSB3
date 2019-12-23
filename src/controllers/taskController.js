@@ -6,20 +6,25 @@ const Task = mongoose.model('Task', TaskSchema);
 
 export const createTask = (req, res) => {
     let newTask = new Task(req.body);
-    console.log(req.body);
 
     newTask.save((err, task) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            res.status(201).json(task);
+            const opts = [{path: 'linkedTasks', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}];
+
+            let promise = Task.populate(task, opts);
+            promise.then((data) => {res.status(201).json(data)});
         }
     })
 };
 
 export const listTasks = (req, res) => {
     Task.find({})
-    .populate('linkedTasks')
+    .populate({
+        path: 'linkedTasks',
+        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
+    })
     .populate('resources')
     .exec((err, tasks) => {
         if(err) {
@@ -32,7 +37,10 @@ export const listTasks = (req, res) => {
 
 export const getTask = (req, res) => {
     Task.findById(req.params.id)
-    .populate('linkedTasks')
+    .populate({
+        path: 'linkedTasks',
+        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
+    })
     .populate('resources')
     .exec((err, task) => {
         if(err) {
@@ -47,17 +55,20 @@ export const getTask = (req, res) => {
 
 export const updateTask = (req, res) => {
     Task.findOneAndUpdate({"_id": req.params.id}, req.body, {new: true, useFindAndModify: false})
-    .populate('linkedTasks')
+    .populate({
+        path: 'linkedTasks',
+        populate: [{path: 'linkedTasks'}, {path: 'resources'}]
+    })
     .populate('resources')
-    .exec((err, project) => {
+    .exec((err, task) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            if(project == null) {
+            if(task == null) {
                 res.sendStatus(404);
             }
             else {
-                res.status(200).json(project);
+                res.status(200).json(task);
             }
         }
     });
@@ -75,5 +86,5 @@ export const deleteTask = (req, res) => {
                 res.sendStatus(204);
             }
         }
-    })
+    });
 };
