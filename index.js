@@ -5,7 +5,7 @@ export let io = require('socket.io')(http, {
     handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Origin": req.headers.origin,
             "Access-Control-Allow-Credentials": true
         };
         res.writeHead(200, headers);
@@ -14,7 +14,7 @@ export let io = require('socket.io')(http, {
 
 import mongoose from 'mongoose';
 
-import { listServices, listServicesPromise } from "./src/services/serviceProjService";
+import { listServicesPromise } from "./src/services/serviceProjService";
 
 import { taskRoutes } from "./src/routes/taskRoutes.js";
 import { resourceRoutes } from "./src/routes/resourceRoutes";
@@ -29,8 +29,6 @@ let client = socket.connect('http://51.15.137.122:18000/', {reconnect: true});
 
 client.on('connect', () => {
     console.log('connected');
-    
-    // let myService = listServicesPromise.then((data) => {console.log(data)});
 
     client.emit('getServices');
     client.on('servicies', (data) => console.log(data));
@@ -38,9 +36,11 @@ client.on('connect', () => {
     client.emit('needHelp');
     client.on('info', (data) => console.log(data));
 
-    
     listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
-    client.on('projectUpdated', (data) => console.log(data));
+    client.on('projectUpdated', (data) => {
+        console.log(data);
+        listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
+    });
     client.on('errorOnProjectUpdate', (data) => console.log(data));
 });
 
@@ -79,9 +79,12 @@ io.on('connection', (socket) => {
         console.log(`socket ${socket.id} disconnected`);
     });
 
-    socket.on('message', (data) => {
-        console.log(data);
-    });
+    /**
+     * On getUpdate event, send an update event containing the services object
+     */
+    socket.on('getUpdate', () => {
+        listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
+    })
 });
 
 http.listen(PORT, 
