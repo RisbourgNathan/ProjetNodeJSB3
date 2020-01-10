@@ -18,12 +18,12 @@ export const TaskSchema = new Schema({
         required: 'Description required'
     },
     start: {
-        type: Date,
+        type: Number,
         required: 'Starting date required',
         default: Date.now()
     },
     end: {
-        type: Date,
+        type: Number,
         required: 'Ending date required',
         default: Date.now()
     },
@@ -35,15 +35,22 @@ export const TaskSchema = new Schema({
         type: String,
         required: 'Color required'
     },
-    linkedTasks: [{
+    linkedTask: [{
         type: ObjectId,
         ref: 'Task',
         autopopulate: true
     }],
-    resources: [{
+    ressources: [{
         type: ObjectId,
         ref: 'Resource',
         autopopulate: true
     }]
+}, {
+    toObject: {
+      transform: function (doc, ret, game) {
+        delete ret.__v;
+        delete ret._id;
+      }
+    }
 });
 TaskSchema.plugin(require('mongoose-autopopulate'));

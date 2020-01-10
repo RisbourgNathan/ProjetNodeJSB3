@@ -14,5 +14,12 @@ export const ServiceSchema = new Schema({
         ref: 'Project',
         autopopulate: true
     }]
+}, {
+    toObject: {
+      transform: function (doc, ret, game) {
+        delete ret.__v;
+        delete ret._id;
+      }
+    }
 });
 ServiceSchema.plugin(require('mongoose-autopopulate'));

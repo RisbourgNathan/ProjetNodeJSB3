@@ -10,31 +10,38 @@ export let io = require('socket.io')(http, {
         };
         res.writeHead(200, headers);
         res.end();
-    }});
+}});
 
 import mongoose from 'mongoose';
+
+import { listServices, listServicesPromise } from "./src/services/serviceProjService";
 
 import { taskRoutes } from "./src/routes/taskRoutes.js";
 import { resourceRoutes } from "./src/routes/resourceRoutes";
 import { projectRoutes } from "./src/routes/ProjectRoutes";
 import { serviceRoutes } from "./src/routes/serviceRoutes";
 
-const PORT = 3200;
+const PORT = 3000;
 
 
 const socket = require('socket.io-client');
-let client = socket.connect('http://51.15.137.122:18000/', {reconnect: true}); // L'adresse IP vous sera communiqué dans un mail ultérieur
+let client = socket.connect('http://51.15.137.122:18000/', {reconnect: true});
 
 client.on('connect', () => {
-  console.log('connected');
+    console.log('connected');
+    
+    // let myService = listServicesPromise.then((data) => {console.log(data)});
 
-  client.emit('getServices');
-  client.on('servicies', (data) => console.log(data));
+    client.emit('getServices');
+    client.on('servicies', (data) => console.log(data));
 
-//   client.emit('needHelp');
-//   client.on('info', (data) => console.log(data));
+    client.emit('needHelp');
+    client.on('info', (data) => console.log(data));
 
-
+    
+    listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
+    client.on('projectUpdated', (data) => console.log(data));
+    client.on('errorOnProjectUpdate', (data) => console.log(data));
 });
 
 

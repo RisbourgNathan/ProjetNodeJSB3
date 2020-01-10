@@ -11,9 +11,9 @@ export const createTask = (req, res) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            const opts = [{path: 'linkedTasks', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}];
+            const opts = [{path: 'linkedTask', populate: [{path: 'linkedTask'}, {path: 'ressources'}]}, {path: 'ressources'}];
 
-            task.linkedTasks.forEach(element => {
+            task.linkedTask.forEach(element => {
                 
             });
 

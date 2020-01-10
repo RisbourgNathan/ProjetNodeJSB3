@@ -24,11 +24,11 @@ export const ProjectSchema = new Schema({
     },
     workingHours: {
         start: {
-            type: Date,
+            type: Number,
             default: Date.now()
         },
         end: {
-            type: Date,
+            type: Number,
             default: Date.now()
         }
     },
@@ -38,13 +38,14 @@ export const ProjectSchema = new Schema({
         autopopulate: true
     }],
     groupTask: [{
+        _id: false,
         name: String,
         start: {
-            type: Date,
+            type: Number,
             default: Date.now()
         },
         end: {
-            type: Date,
+            type: Number,
             default: Date.now()
         }
     }],
@@ -54,11 +55,19 @@ export const ProjectSchema = new Schema({
         autopopulate: true
     }],
     milestones:[{
+        _id: false,
         name: String,
         date: {
-            type: Date,
-            default: Date.now()
+            type: Number,
+            default: Date.now(),
         }
     }]
+}, {
+    toObject: {
+      transform: function (doc, ret, game) {
+        delete ret.__v;
+        delete ret._id;
+      }
+    }
 });
 ProjectSchema.plugin(require('mongoose-autopopulate'));

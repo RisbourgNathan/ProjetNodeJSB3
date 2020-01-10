@@ -15,4 +15,11 @@ export const ResourceSchema = new Schema({
         type: String,
         required: 'Resource type required'
     }
+}, {
+    toObject: {
+      transform: function (doc, ret, game) {
+        delete ret.__v;
+        delete ret._id;
+      }
+    }
 });

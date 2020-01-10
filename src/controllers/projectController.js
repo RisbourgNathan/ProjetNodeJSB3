@@ -11,7 +11,7 @@ export const createProject = (req, res) => {
         if(err) {
             res.status(400).send(err);
         } else {
-            const opts = [{path: 'task', populate: [{path: 'linkedTasks'}, {path: 'resources'}]}, {path: 'resources'}];
+            const opts = [{path: 'task', populate: [{path: 'linkedTask'}, {path: 'resources'}]}, {path: 'resources'}];
 
             let promise = Project.populate(project, opts);
             promise.then((data) => {res.status(201).json(data)});
@@ -20,7 +20,7 @@ export const createProject = (req, res) => {
 };
 
 export const listProjects = (req, res) => {
-    Project.find({})
+    Project.find({}, '-_id -__v')
     .exec((err, projects) => {
         if(err) {
             res.status(400).send(err);
@@ -31,7 +31,7 @@ export const listProjects = (req, res) => {
 };
 
 export const getProject = (req, res) => {
-    Project.findById(req.params.id)
+    Project.findById(req.params.id, '-_id -__v')
     .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
