@@ -1,5 +1,19 @@
 let mongoose = require('mongoose');
 
+const autoIncrement = require('mongoose-auto-increment');
+
+const mongooseConnection = mongoose.createConnection('mongodb://localhost/NodeJSDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}, error => {
+    if(error) {
+        console.log(error);
+        process.exit(1);       
+    }
+});
+
+autoIncrement.initialize(mongooseConnection);
+
 const Schema = mongoose.Schema;
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
@@ -54,3 +68,4 @@ export const TaskSchema = new Schema({
     }
 });
 TaskSchema.plugin(require('mongoose-autopopulate'));
+TaskSchema.plugin(autoIncrement.plugin, {model: 'Task', field: 'id'});

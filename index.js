@@ -23,25 +23,24 @@ import { serviceRoutes } from "./src/routes/serviceRoutes";
 
 const PORT = 3000;
 
-
 const socket = require('socket.io-client');
 let client = socket.connect('http://51.15.137.122:18000/', {reconnect: true});
 
 client.on('connect', () => {
     console.log('connected');
 
-    client.emit('getServices');
-    client.on('servicies', (data) => console.log(data));
+    // client.emit('getServices');
+    // client.on('servicies', (data) => console.log(data));
 
-    client.emit('needHelp');
-    client.on('info', (data) => console.log(data));
+    // client.emit('needHelp');
+    // client.on('info', (data) => console.log(data));
 
-    listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
-    client.on('projectUpdated', (data) => {
-        console.log(data);
-        listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
-    });
-    client.on('errorOnProjectUpdate', (data) => console.log(data));
+    // listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
+    // client.on('projectUpdated', (data) => {
+    //     console.log(data);
+    //     listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
+    // });
+    // client.on('errorOnProjectUpdate', (data) => console.log(data));
 });
 
 
@@ -53,6 +52,8 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     next();
 });
+
+export const autoIncrement = require('mongoose-auto-increment');
 
 // mongoose connection
 mongoose.Promise = global.Promise;

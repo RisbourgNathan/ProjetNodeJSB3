@@ -10,7 +10,6 @@ export const listServicesPromise = new Promise((resolve, reject) => {
         if(err) {
             reject(err);
         } else {
-            console.log("Return services");
             resolve(services[0].toObject());
         }
     });
