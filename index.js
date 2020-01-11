@@ -14,7 +14,7 @@ export let io = require('socket.io')(http, {
 
 import mongoose from 'mongoose';
 
-import { listServicesPromise } from "./src/services/serviceProjService";
+import { listServices } from "./src/services/serviceProjService";
 
 import { taskRoutes } from "./src/routes/taskRoutes.js";
 import { resourceRoutes } from "./src/routes/resourceRoutes";
@@ -37,9 +37,6 @@ client.on('connect', () => {
     // client.emit('needHelp');
     // client.on('info', (data) => console.log(data));
 
-    // listServicesPromise.then((data) => {console.log(data.projects[0])}, error => console.log(error));
-
-
     io.on('connection', (socket) => {
         console.log(`Socket ${socket.id} connected`);
     
@@ -51,22 +48,17 @@ client.on('connect', () => {
          * On getUpdate event, send an update event containing the services object
          */
         socket.on('getUpdate', () => {
-            // listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
-            listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
-            client.on('projectUpdated', (data) => {
-                console.log(data);
-                socket.emit('update', data);
-                // listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
-            });
-        })
+            let listServicesPromise = listServices();
+            
+            listServicesPromise.then((data) => {client.emit('sendUpdate', data);}, error => console.log(error));
+        });
+
+        client.on('projectUpdated', (data) => {
+            console.log(data);
+            socket.emit('update', data);
+        });
     });
     
-
-    // listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
-    // client.on('projectUpdated', (data) => {
-    //     console.log(data);
-    //     listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
-    // });
     client.on('errorOnProjectUpdate', (data) => console.log(data));
 });
 
