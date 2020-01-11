@@ -7,7 +7,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 export const ServiceSchema = new Schema({
     nameService: {
         type: String,
-        required: 'Service name requiered'
+        required: 'Service name required'
     },
     projects:[{
         type: ObjectId,

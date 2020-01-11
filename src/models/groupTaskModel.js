@@ -5,16 +5,16 @@ const Schema = mongoose.Schema;
 export const GroupTaskSchema = new Schema({
     name: {
         type: String,
-        required: 'GroupTask name requiered'
+        required: 'GroupTask name required'
     },
     start: {
         type: Number,
-        required: 'starting date requiered',
+        required: 'starting date required',
         default: Date.now()
     },
     end: {
         type: Number,
-        required: 'ending date requiered',
+        required: 'ending date required',
         default: Date.now()
     }
 }, {

@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 export const MilestonesSchema = new Schema({
     name: {
         type: String,
-        required: 'Milestones name requiered'
+        required: 'Milestones name required'
     },
     date: {
         type: Number,
-        required: 'date requiered',
+        required: 'date required',
         default: Date.now()
     }
 }, {
