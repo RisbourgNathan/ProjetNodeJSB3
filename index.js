@@ -31,20 +31,43 @@ let client = socket.connect('http://51.15.137.122:18000/', {reconnect: true});
 client.on('connect', () => {
     console.log('connected');
 
-    // client.emit('getServices');
-    // client.on('servicies', (data) => console.log(data));
+    client.emit('getServices');
+    client.on('servicies', (data) => console.log(data));
 
     // client.emit('needHelp');
     // client.on('info', (data) => console.log(data));
 
     // listServicesPromise.then((data) => {console.log(data.projects[0])}, error => console.log(error));
 
+
+    io.on('connection', (socket) => {
+        console.log(`Socket ${socket.id} connected`);
+    
+        socket.on('disconnect', () => {
+            console.log(`socket ${socket.id} disconnected`);
+        });
+    
+        /**
+         * On getUpdate event, send an update event containing the services object
+         */
+        socket.on('getUpdate', () => {
+            // listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
+            listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
+            client.on('projectUpdated', (data) => {
+                console.log(data);
+                socket.emit('update', data);
+                // listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
+            });
+        })
+    });
+    
+
     // listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
     // client.on('projectUpdated', (data) => {
     //     console.log(data);
     //     listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
     // });
-    // client.on('errorOnProjectUpdate', (data) => console.log(data));
+    client.on('errorOnProjectUpdate', (data) => console.log(data));
 });
 
 
@@ -78,21 +101,6 @@ projectRoutes(app);
 serviceRoutes(app);
 milestonesRoutes(app);
 groupTaskRoutes(app);
-
-io.on('connection', (socket) => {
-    console.log(`Socket ${socket.id} connected`);
-
-    socket.on('disconnect', () => {
-        console.log(`socket ${socket.id} disconnected`);
-    });
-
-    /**
-     * On getUpdate event, send an update event containing the services object
-     */
-    socket.on('getUpdate', () => {
-        listServicesPromise.then((data) => {io.emit('update', data);}, error => console.log(error));
-    })
-});
 
 http.listen(PORT, 
     console.log(`listening on port ${PORT}`)

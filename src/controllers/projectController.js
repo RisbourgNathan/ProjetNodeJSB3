@@ -20,7 +20,7 @@ export const createProject = (req, res) => {
 };
 
 export const listProjects = (req, res) => {
-    Project.find({}, '-_id -__v')
+    Project.find({})
     .exec((err, projects) => {
         if(err) {
             res.status(400).send(err);
@@ -31,7 +31,7 @@ export const listProjects = (req, res) => {
 };
 
 export const getProject = (req, res) => {
-    Project.findById(req.params.id, '-_id -__v')
+    Project.findById(req.params.id)
     .exec((err, project) => {
         if(err) {
             res.status(400).send(err);
