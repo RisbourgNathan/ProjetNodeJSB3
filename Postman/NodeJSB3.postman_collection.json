@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 0,\n    \"name\": \"myTask\",\n    \"desc\": \"My great task\",\n    \"percentageProgress\": 17,\n    \"color\": \"#fc0202\",\n    \"linkedTasks\": [],\n    \"resources\": []\n}",
+							"raw": "{\n    \"id\": 2,\n    \"name\": \"Другое задание\",\n    \"desc\": \"сложное задание\",\n    \"percentageProgress\": 17,\n    \"color\": \"#fc0202\",\n    \"linkedTask\": [],\n    \"resources\": []\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,7 +232,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Updated Project\",\n\t\"task\": []\n}",
+							"raw": "{\n\t\"task\": [\"5e18cee1daebfd1e4027449f\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -240,7 +240,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/project/update/5dfffa8b94ed824764be8969",
+							"raw": "localhost:3000/project/update/5e18ce55daebfd1e4027449b",
 							"host": [
 								"localhost"
 							],
@@ -248,7 +248,7 @@
 							"path": [
 								"project",
 								"update",
-								"5dfffa8b94ed824764be8969"
+								"5e18ce55daebfd1e4027449b"
 							]
 						}
 					},
@@ -563,6 +563,200 @@
 								"service",
 								"delete",
 								"5dffe9037bcc695380714f19"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Milestones",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/milestones/list",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"milestones",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/milestones/get",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"milestones",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/milestones/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"milestones",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/milestones/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"milestones",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "GroupTask",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/groupTask/list",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupTask",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/groupTask/create",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupTask",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/groupTask/get",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupTask",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/groupTask/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupTask",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/groupTask/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"groupTask",
+								"update"
 							]
 						}
 					},

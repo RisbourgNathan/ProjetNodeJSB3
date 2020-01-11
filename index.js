@@ -20,6 +20,8 @@ import { taskRoutes } from "./src/routes/taskRoutes.js";
 import { resourceRoutes } from "./src/routes/resourceRoutes";
 import { projectRoutes } from "./src/routes/ProjectRoutes";
 import { serviceRoutes } from "./src/routes/serviceRoutes";
+import { milestonesRoutes } from "./src/routes/milestonesRoutes";
+import { groupTaskRoutes } from "./src/routes/groupTaskRoutes";
 
 const PORT = 3000;
 
@@ -34,6 +36,8 @@ client.on('connect', () => {
 
     // client.emit('needHelp');
     // client.on('info', (data) => console.log(data));
+
+    // listServicesPromise.then((data) => {console.log(data.projects[0])}, error => console.log(error));
 
     // listServicesPromise.then((data) => {client.emit('sendUpdate', data)}, error => console.log(error));
     // client.on('projectUpdated', (data) => {
@@ -72,6 +76,8 @@ taskRoutes(app);
 resourceRoutes(app);
 projectRoutes(app);
 serviceRoutes(app);
+milestonesRoutes(app);
+groupTaskRoutes(app);
 
 io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} connected`);

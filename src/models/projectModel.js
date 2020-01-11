@@ -38,16 +38,9 @@ export const ProjectSchema = new Schema({
         autopopulate: true
     }],
     groupTask: [{
-        _id: false,
-        name: String,
-        start: {
-            type: Number,
-            default: Date.now()
-        },
-        end: {
-            type: Number,
-            default: Date.now()
-        }
+        type: ObjectId,
+        ref: 'GroupTask',
+        autopopulate: true
     }],
     resources:[{
         type: ObjectId,
@@ -55,12 +48,9 @@ export const ProjectSchema = new Schema({
         autopopulate: true
     }],
     milestones:[{
-        _id: false,
-        name: String,
-        date: {
-            type: Number,
-            default: Date.now(),
-        }
+        type: ObjectId,
+        ref: 'Milestones',
+        autopopulate: true
     }]
 }, {
     toObject: {
