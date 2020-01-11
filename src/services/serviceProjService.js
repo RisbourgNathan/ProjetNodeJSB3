@@ -10,7 +10,13 @@ export const listServicesPromise = new Promise((resolve, reject) => {
         if(err) {
             reject(err);
         } else {
-            resolve(services[0].toObject());
+            if(services[0] != undefined)
+            {
+                resolve(services[0].toObject());
+            }
+            else {
+                console.log('There is no service yet, create one');
+            } 
         }
     });
 });
