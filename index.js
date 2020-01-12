@@ -52,11 +52,11 @@ client.on('connect', () => {
             
             listServicesPromise.then((data) => {client.emit('sendUpdate', data);}, error => console.log(error));
         });
+    });
 
-        client.on('projectUpdated', (data) => {
-            console.log(data);
-            socket.emit('update', data);
-        });
+    client.on('projectUpdated', (data) => {
+        console.log(data);
+        io.emit('update', data);
     });
     
     client.on('errorOnProjectUpdate', (data) => console.log(data));
